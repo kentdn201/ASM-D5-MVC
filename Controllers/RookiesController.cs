@@ -2,7 +2,6 @@ using CsvHelper;
 using CsvHelper.TypeConversion;
 using D5.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace D5.Controllers;
 
@@ -92,9 +91,8 @@ public class RookiesController : Controller
             }
         };
 
-    [Route("rookies/male")]
-    [Route("rookies/male-person")]
-
+    [Route("NashTech/Rookies/Get-Male-Person")]
+    [Route("rookies/Get-Male-Person")]
     public IActionResult GetMalePerson()
     {
         var results = (from person in persons
@@ -103,7 +101,8 @@ public class RookiesController : Controller
         return Json(results);
     }
 
-    [Route("rookies/get-oldest-member")]
+    [Route("NashTech/Rookies/Get-Oldest-Member")]
+    [Route("rookies/Get-Oldest-Member")]
     public IActionResult GetOldestMember()
     {
         var maxAge = persons.Max(m => m.TotalDays);
@@ -111,14 +110,15 @@ public class RookiesController : Controller
         return Json(oldest);
     }
 
-    [Route("rookies/get-full-name")]
+    [Route("NashTech/Rookies/Get-Full-Name")]
+    [Route("rookies/Get-Full-Name")]
     public IActionResult GetFullNames()
     {
         var FullName = persons.Select(m => m.FullName).ToList();
         return Json(FullName);
     }
 
-
+    [Route("NashTech/Rookies/split-members-by-birth-year/{year:int}")]
     [Route("rookies/split-members-by-birth-year/{year:int}")]
     public IActionResult SplitMembersByBirthYear(int year)
     {
@@ -138,6 +138,7 @@ public class RookiesController : Controller
         return Json(results);
     }
 
+    [Route("NashTech/Rookies/get-first-member-by-birth-place")]
     [Route("rookies/get-first-member-by-birth-place")]
     public IActionResult GetFirstMembersByBirthPlace()
     {
@@ -145,6 +146,7 @@ public class RookiesController : Controller
         return Json(member);
     }
 
+    [Route("NashTech/Rookies/Export")]
     [Route("rookies/export")]
     public IActionResult Export()
     {
@@ -152,7 +154,6 @@ public class RookiesController : Controller
         var memoryStream = new MemoryStream(buffer);
         return new FileStreamResult(memoryStream, "text/csv") { FileDownloadName = "people.csv" };
     }
-
     public byte[] WriteCsvToMemory(List<Person> data)
     {
         using (var stream = new MemoryStream())
