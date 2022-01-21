@@ -21,6 +21,10 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "rookies",
+    pattern: "nashtech/{controller=Rookies}/{action=GetMalePerson}/{id?}");
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
